@@ -1,6 +1,35 @@
-<html>
+<!DOCTYPE html>
+
+<html ng-app="myFirstApp">
+<head>
+
+<script src="angular.js"></script>
+<script src="string.js"></script>
+<script src="app.js"></script>
+
 <title> Reborn 2 Code </title>
+</head>
 <body>
-  <h1> I am back... </h1>
+  <h1> My First Angular App</h1>
+
+  <div ng-controller="MyFirstController">
+
+    <h1> Lets count the words </h1>
+
+    <input type="text" ng-model="data" height="100" width="100"> </input>
+
+    Upper case: {{ sayHello() }}
+
+    Count: {{ totalCount() }}
+
+    Dictionary: {{ dict() }}
+
+    Last Frequency: {{ freq() }}
+
+    <h3 ng-repeat="x in dict()">
+        showing frequency of {{ x }}
+    </h3>
+
+  </div>
 </body>
 </html>
