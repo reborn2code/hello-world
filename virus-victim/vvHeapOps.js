@@ -2,10 +2,8 @@
 
 'use strict';
 
-angular.module('vvAnalogy', [])
 
-.controller('vvBuildHeap',function ($scope) {
-
+var vvHeapOps = function () {
 // Heap Properties
 var hhHeapSize;
 
@@ -55,7 +53,6 @@ var hhIsIsmallerThanJ = function (hhHeapIn, hhI, hhJ){
   }
   return i; //returns True if hhI index is smaller than hhJ, otherwise false
 };
-
 
 var hhMinHeapify = function (hhHeap, hhIndex) {
   var l = hhGetLeft(hhIndex);
@@ -139,39 +136,22 @@ var hhMinHeapify = function (hhHeap, hhIndex) {
     return hhHeapOut;
   }; // end of hhInsertHeap
 
-  //Converting the input string into an Array
-  $scope.vvInputArray = function() {
-    return $scope.vvInputString.split(",");
+  return {
+    hhInsertHeap: hhInsertHeap,
+    hhExtractHeapMinimum: hhExtractHeapMinimum,
+    hhGetHeapMinimum: hhGetHeapMinimum,
+    hhBuildMinHeap: hhBuildMinHeap,
+    hhMinHeapify: hhMinHeapify,
+    hhGetParent: hhGetParent,
+    hhGetLeft: hhGetLeft,
+    hhGetRight: hhGetRight,
+    hhHeapSize: hhHeapSize
   };
 
-  //Building Min-Heap using the input Array
-  $scope.vvInput2Heap = function () {
-    var hhHeapIn = $scope.vvInputString.split(",");
-    var hhHeapOut = hhBuildMinHeap(hhHeapIn);
-    $scope.vvHeapArray = hhHeapOut;
+}; //end of vvHeapOps
 
-    $scope.vvHeapMin = hhGetHeapMinimum(hhHeapOut);
-    var hhHeapExtracted = hhExtractHeapMinimum(hhHeapOut);
-
-    hhPrintHeap(hhHeapExtracted);
-
-    //inserting new node in Heap.
-    var hhHeapWithInsertion = hhInsertHeap(hhHeapExtracted, $scope.vvInputNode);
-
-    hhPrintHeap(hhHeapWithInsertion);
-
-    return hhHeapOut;
-  };
-
-
-
-  //test function to check whether string.js is working or not
-   $scope.vvGetLength = function() {
-     return $scope.vvInputString.toUpperCase().length;
-   };
-
-// end of controller - vvBuildHeap
-});
+var module = angular.module('vvAnalogy');
+module.factory("vvHeapOps", vvHeapOps);
 
 // end of IIFE
 })();

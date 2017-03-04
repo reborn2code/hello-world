@@ -2,24 +2,57 @@
 <html ng-app="vvAnalogy">
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="vvStyle.css">
     <script src="angular.js"></script>
     <script src="string.js"></script>
-    <script src="vvHeap.js"></script>
+    <script src="vvAnalogy.js"></script>
+    <script src="vvHeapOps.js"></script>
+    <script src="vvDataInput.js"></script>
     <title>RVLC</title>
   </head>
   <body>
       <div ng-controller="vvBuildHeap">
 
           <input type="text" ng-model="vvInputString"> </input>
+          <!--
           <input type="text" ng-model="vvInputNode"> </input>
+          -->
+          <button ng-click="vvGenerateDict()"> Generate Dictionary </button>
           <button ng-click="vvInput2Heap()"> Generate Heap </button>
-
         <div>
           Input : {{ vvInputString }}
         </div>
 
         <p> Min Value of Heap : {{ vvHeapMin }}</p>
-        <p>Showing Input Array converted into Extracted Min Heap </p>
+
+
+
+        <table ng-show="vvHeapArray">
+          <tr>
+            <td> Heap Value </td>
+          </tr>
+          <tr ng-repeat="x in vvHeapArray">
+            <td>
+              Value is {{ x }}
+            </td>
+          </tr>
+        </table>
+
+        <table ng-show="vvDictWithFreq">
+          <tr>
+            <td> Symbol </td>
+            <td> Frequency </td>
+          </tr>
+          <tr ng-repeat="x in vvDictWithFreq">
+            <td>
+              {{ x.iiSymbol }}
+            </td>
+            <td>
+              {{ x.iiFrequency }}
+            </td>
+          </tr>
+        </table>
+
         <!--
         <p ng-repeat="x in vvHeapArray">
           Index is: {{ x }}
