@@ -106,7 +106,9 @@ var hhMinHeapify = function (hhHeap, hhIndex) {
   var hhExtractHeapMinimum = function (hhHeap) {
     if (hhHeapSize > 1) {
       var min = hhHeap[0];
-      hhHeap[0] = hhHeap[hhGetHeapSize(hhHeap) - 1];
+      hhHeap[0] = hhHeap[hhHeapSize - 1];
+      //Now removing the last element of the array to avoid any duplication/confusion. hhHeapSize remains same as the length of the array
+      hhHeap.pop();
       hhHeapSize = hhHeapSize - 1;
       hhHeap = hhMinHeapify(hhHeap, 0);
     }
@@ -115,11 +117,11 @@ var hhMinHeapify = function (hhHeap, hhIndex) {
 
   var hhHeapDecreaseKey = function (hhHeap, hhIndex, hhKey) {
     //if new Key is bigger than the current value, then there is no decrease
-    // NOTE to self - this comparison will change when I implement for tree node
-    if ( Number(hhHeap[hhIndex].iiFrequency) > Number(hhKey) ) {
+
+    if ( Number(hhHeap[hhIndex].iiFrequency) >= Number(hhKey.iiFrequency) ) {
       hhHeap[hhIndex] = hhKey ;
       while( hhIndex > 0 && hhIsIsmallerThanJ(hhHeap, hhIndex, hhGetParent(hhIndex))) {
-      //while( hhIndex > 0 && Number(hhHeap[hhGetParent(hhIndex)]) > Number(hhHeap[hhIndex])) {
+      //while( hhIndex > 0 && Number(hhHeap[hhGetParent(hhIndex)]) > Number(hhHeap[hhIndex])) {      
         var temp = hhHeap[hhIndex];
         hhHeap[hhIndex] = hhHeap[hhGetParent(hhIndex)];
         hhHeap[hhGetParent(hhIndex)] = temp;
@@ -132,7 +134,7 @@ var hhMinHeapify = function (hhHeap, hhIndex) {
   //Assumption is that 1000 is the maximum
   var hhInsertHeap = function(hhHeap, hhKey) {
     hhHeapSize = hhHeapSize + 1;
-    hhHeap[hhHeapSize - 1] = 1000;
+    hhHeap[hhHeapSize - 1] = hhKey;
     var hhHeapOut = hhHeapDecreaseKey(hhHeap, hhHeapSize - 1, hhKey);
     return hhHeapOut;
   }; // end of hhInsertHeap

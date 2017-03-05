@@ -4,7 +4,7 @@
 
 angular.module('vvAnalogy', [])
 
-.controller('vvBuildHeap',function ($scope, vvDataInput, vvHeapOps) {
+.controller('vvBuildHeap',function ($scope, vvDataInput, vvHeapOps, vvTree) {
 
   //Converting the input string into an Array
   $scope.vvInputArray = function() {
@@ -21,22 +21,37 @@ angular.module('vvAnalogy', [])
     //var hhHeapIn = $scope.vvInputString.split(",");
     var hhHeapIn = vvDataInput.iiGetFrequency($scope.vvInputString);
     var hhHeapOut = vvHeapOps.hhBuildMinHeap(hhHeapIn);
+    // var nodeNew = {
+    //   iiSymbol: "A,B",
+    //   iiFrequency: 0.07
+    // };
+    // hhHeapOut = vvHeapOps.hhInsertHeap(hhHeapOut, nodeNew);
+
+    hhHeapOut = vvHeapOps.hhExtractHeapMinimum(hhHeapOut);
+
+    hhHeapOut = vvHeapOps.hhExtractHeapMinimum(hhHeapOut);
+
     $scope.vvHeapArray = hhHeapOut;
-
-
     //$scope.vvHeapMin = hhGetHeapMinimum(hhHeapOut);
     //var hhHeapExtracted = hhExtractHeapMinimum(hhHeapOut);
-
     //hhPrintHeap(hhHeapExtracted);
-
     //inserting new node in Heap.
     //var hhHeapWithInsertion = hhInsertHeap(hhHeapExtracted, $scope.vvInputNode);
-
     //hhPrintHeap(hhHeapWithInsertion);
 
     return hhHeapOut;
   };
 
+  $scope.vvGenerateHuffmanTree = function () {
+    var hhHeapIn = vvDataInput.iiGetFrequency($scope.vvInputString);
+    var hhHeapOut = vvHeapOps.hhBuildMinHeap(hhHeapIn);
+    var huffmanTree = vvTree.ttBuildHuffmanTree(hhHeapOut);
+    huffmanTree = vvTree.ttAssignCode(huffmanTree);
+    $scope.vvHuffmanTree = huffmanTree;
+    $scope.vvAvgCodeLength = vvTree.ttGetAvgCodeLength(huffmanTree);
+    $scope.vvOverallRank = vvTree.ttGetOverallRank(huffmanTree);
+
+  };
 
 
   //test function to check whether string.js is working or not
