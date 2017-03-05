@@ -130,15 +130,145 @@ var vvTree = function(vvHeapOps) {
     return -1; //This condition shouldn't be executed in a normal tree.
   }; //end of ttGetRootNode()
 
-  // var ttPadingInsertion = function(ttNode) {
-  //   //This method performs padding insertion at the given node.
-  // };
+  var ttPerformPaddingWith = function(ttTreeArray, ttIndex, ttPad) {
+    var codeword, tmpCodeword, newRank, currentRank;
+    var ttTreeArray = ttCheckForVirusVictim(ttTreeArray);
+    currentRank = ttGetOverallRank(ttTreeArray);
+
+    codeword = ttTreeArray[ttIndex].ttCodeword.concat(ttPad);
+    tmpCodeword = ttTreeArray[ttIndex].ttCodeword;
+    ttTreeArray[ttIndex].ttCodeword = codeword;
+    console.log("codeword: " + codeword);
+    if(ttIsItValidPrefixCode(ttTreeArray, codeword, ttIndex)) {
+      console.log("codeword: " + codeword + " Tree Code: " + tmpCodeword);
+      ttTreeArray = ttCheckForVirusVictim(ttTreeArray);
+      newRank = ttGetOverallRank(ttTreeArray);
+      console.log("newRank: " + newRank + " currentRank: " + currentRank);
+    }
+
+    if(newRank > currentRank) {
+      ttTreeArray[ttIndex].codeword = tmpCodeword;
+    }
+
+    return newRank;
+
+  }; // end of ttPerformPaddingWith()
+
+  var ttPadingInsertion = function(ttTreeArray, ttIndex) {
+    //This method performs padding insertion at the given index and returns modified tree.
+    if(ttIndex < 0 || ttIndex > ttTreeArray.length) {
+      console.error("Not a Valid Tree");
+      return ttTreeArray;
+    }
+    var i, len, currentRank, newRank, codeword;
+    len = ttTreeArray.length;
+    currentRank = ttGetOverallRank(ttTreeArray);
+    newRank = currentRank;
+
+    //Pading insertion is performed only on a leaf node
+    if(ttIsItLeafNode(ttTreeArray, ttIndex) == false) {
+      console.warn("Not a Valid Leaf");
+      console.log(ttTreeArray[ttIndex].ttSymbol);
+      return ttTreeArray;
+    }
+
+    // Check for current Rank. If current rank is 0 or the given node's rank is zero than no need of padding insertion.
+    if(currentRank == 0 || ttTreeArray[ttIndex].ttRank == 0) {
+      console.log("No Need to perform Padding insertion");
+      console.log(ttTreeArray[ttIndex].ttSymbol);
+      return ttTreeArray;
+    }
+
+    //perform padding insertion till there is a reduction in the rank
+      newRank = ttPerformPaddingWith(ttTreeArray, ttIndex, "0");
+      if(newRank < currentRank) {
+        return ttTreeArray;
+      }
+      newRank = ttPerformPaddingWith(ttTreeArray, ttIndex, "1");
+    return ttTreeArray;
+
+  };
+
+  var ttIsItLeafNode = function(ttTreeArray, ttIndex) {
+    //This method returns true if the given index is a leaf node
+    if (ttIndex < 0 || ttIndex >= ttTreeArray.length) {
+      console.error("Not a Valid Node");
+      return false;
+    }
+    if( ttTreeArray[ttIndex].ttLeft == -1 && ttTreeArray[ttIndex].ttRight == -1) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }; //end of ttIsItLeafNode()
+
+  var ttIsItValidPrefixCode = function (ttTreeArray, codeword, ttIndex) {
+    //This method returns falst if this is not a valid Prefix codeword
+    //Properties of a prefic code. This codeword
+    //    : is not prefix of any other codeword
+    //    : any other codeword is not prefix of this codeword
+    // Note: incase of a prefix code, codeword1.search(codeword2) will return 0, i.e. matching string found at the beginning.
+    var i, len;
+    len = ttTreeArray.length;
+    for (i = 0 ; i < len ; i++ ) {
+      if( i == ttIndex || ttIsItLeafNode(ttTreeArray, i) == false ) {
+        continue;
+      }
+      if(ttTreeArray[i].ttCodeword.search(codeword) == 0 ) {
+        console.log("codeword is prefix of given codeword" + codeword + " " + ttTreeArray[i].ttCodeword);
+        return false;
+      }
+      if(codeword.search(ttTreeArray[i].ttCodeword) == 0 ) {
+        console.log("given codeword is prefix of codeword" + codeword + " " + ttTreeArray[i].ttCodeword);
+        return false;
+      }
+    }
+    return true; //incase none of the above condition is met, this is a valid code.
+  }; //End of ttIsItValidPrefixCode()
+
+  var ttCheckForVirusVictim = function(ttTreeArray) {
+    //This method checks for virus and victim on all the nodes.
+    //These are caluldated only for children nodes.
+    var i, j, len;
+    len = ttTreeArray.length;
+    //reset all virus, victim nodes
+    for (i = 0; i < len; i++) {
+      for (j = 0; j < ttTreeArray[i].ttRank; j++) {
+        ttTreeArray[j].ttVictims.pop();
+      }
+      ttTreeArray[i].ttRank = 0;
+    }
+
+    for ( i = 0; i < len; i++ ) {
+      if (ttIsItLeafNode(ttTreeArray, i)) {
+        for ( j = 0; j < len; j++ ) {
+          if(ttIsItLeafNode(ttTreeArray, j)) {
+            // Virus is smaller in Size than victim.
+            // In case ttTreeArray[i] is Virus to ttTreeArray[j],
+            //    : ttTreeArray[i]'s rank will increase by one
+            //    : ttTreeArray[i]'s victim list will have id of ttTreeArray[j]
+            if(ttTreeArray[j].ttCodeword.search(ttTreeArray[i].ttCodeword) > 0 ) {
+              // console.log("i: " + i + " code at i: " + ttTreeArray[i].ttCodeword);
+              // console.log("j: " + j + " code at j: " + ttTreeArray[j].ttCodeword);
+              ttTreeArray[i].ttRank++;
+              ttTreeArray[i].ttVictims.push(j);
+            } //end of if to check virus - victim
+          }
+        } // End of internal for loop
+      }
+    } //End of external for loop
+
+    return ttTreeArray;
+  }
 
   return {
     ttBuildHuffmanTree: ttBuildHuffmanTree,
     ttGetAvgCodeLength: ttGetAvgCodeLength,
     ttGetOverallRank: ttGetOverallRank,
-    ttAssignCode: ttAssignCode
+    ttAssignCode: ttAssignCode,
+    ttCheckForVirusVictim: ttCheckForVirusVictim,
+    ttPadingInsertion: ttPadingInsertion
   };
 
 }; // end of vvTree()

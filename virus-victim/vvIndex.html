@@ -21,6 +21,7 @@
           <button ng-click="vvGenerateDict()"> Generate Dictionary </button>
           <button ng-click="vvInput2Heap()"> Generate Heap </button>
           <button ng-click="vvGenerateHuffmanTree()"> Generate Huffman Tree </button>
+          <button ng-click="vvPaddingInsertion()"> Padding Insertion </button>
 
         <div>
           Input : {{ vvInputString }}
@@ -29,7 +30,7 @@
         <p> Avg Code Length : {{ vvAvgCodeLength }}</p>
         <p> Overall rank : {{ vvOverallRank }}</p>
 
-        <table ng-show="vvHuffmanTree">
+        <table ng-show="vvHuffmanTree" ng-hide="vvHeapArray" ng-hide="vvDictWithFreq">
           <tr>
             <td> Symbol </td>
             <td> frequency </td>
@@ -38,19 +39,21 @@
             <td> parent </td>
             <td> left </td>
             <td> right </td>
+            <td> rank </td>
           </tr>
           <tr ng-repeat="x in vvHuffmanTree">
             <td> {{ x.ttSymbol }}</td>
             <td> {{ x.iiFrequency }} </td>
             <td> {{ x.ttCodeword }} </td>
-            <td> {{ x.ttID }}</td>
-            <td> {{ x.ttParent }}</td>
-            <td> {{ x.ttLeft }}</td>
-            <td> {{ x.ttRight }}</td>
+            <td> {{ x.ttID }} </td>
+            <td> {{ x.ttParent }} </td>
+            <td> {{ x.ttLeft }} </td>
+            <td> {{ x.ttRight }} </td>
+            <td> {{ x.ttRank }} </td>
           </tr>
         </table>
 
-        <table ng-show="vvHeapArray">
+        <table ng-show="vvHeapArray" ng-hide="vvHuffmanTree" ng-hide="vvDictWithFreq">
           <tr>
             <td> Heap Symbol </td>
             <td> Frequency </td>
@@ -64,7 +67,7 @@
           </tr>
         </table>
 
-        <table ng-show="vvDictWithFreq">
+        <table ng-show="vvDictWithFreq" ng-hide="vvHuffmanTree" ng-hide="vvHeapArray">
           <tr>
             <td> Symbol </td>
             <td> Frequency </td>
