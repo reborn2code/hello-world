@@ -42,8 +42,8 @@ var hhGetHeapSize = function ( hhHeap ) {
 var hhIsIsmallerThanJ = function (hhHeapIn, hhI, hhJ){
   var i;
 
-  var ii = Number(hhHeapIn[hhI]);
-  var jj = Number(hhHeapIn[hhJ]);
+  var ii = Number(hhHeapIn[hhI].iiFrequency);
+  var jj = Number(hhHeapIn[hhJ].iiFrequency);
 
   if(ii < jj) {
     i = 1;
@@ -116,9 +116,10 @@ var hhMinHeapify = function (hhHeap, hhIndex) {
   var hhHeapDecreaseKey = function (hhHeap, hhIndex, hhKey) {
     //if new Key is bigger than the current value, then there is no decrease
     // NOTE to self - this comparison will change when I implement for tree node
-    if ( Number(hhHeap[hhIndex]) > Number(hhKey) ) {
+    if ( Number(hhHeap[hhIndex].iiFrequency) > Number(hhKey) ) {
       hhHeap[hhIndex] = hhKey ;
-      while( hhIndex > 0 && Number(hhHeap[hhGetParent(hhIndex)]) > Number(hhHeap[hhIndex])) {
+      while( hhIndex > 0 && hhIsIsmallerThanJ(hhHeap, hhIndex, hhGetParent(hhIndex))) {
+      //while( hhIndex > 0 && Number(hhHeap[hhGetParent(hhIndex)]) > Number(hhHeap[hhIndex])) {
         var temp = hhHeap[hhIndex];
         hhHeap[hhIndex] = hhHeap[hhGetParent(hhIndex)];
         hhHeap[hhGetParent(hhIndex)] = temp;

@@ -18,7 +18,8 @@ angular.module('vvAnalogy', [])
 
   //Building Min-Heap using the input Array
   $scope.vvInput2Heap = function () {
-    var hhHeapIn = $scope.vvInputString.split(",");
+    //var hhHeapIn = $scope.vvInputString.split(",");
+    var hhHeapIn = vvDataInput.iiGetFrequency($scope.vvInputString);
     var hhHeapOut = vvHeapOps.hhBuildMinHeap(hhHeapIn);
     $scope.vvHeapArray = hhHeapOut;
 

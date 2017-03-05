@@ -36,7 +36,7 @@ var vvDataInput = function () {
   // Get frequency of every repeated word
   var iiGetFrequency = function(data) {
     var iiListNode = [];
-    
+
     var dict = iiGenerateDict(data);
     var dataUPPER = iiConvertToUpperCase(data);
 
@@ -67,7 +67,7 @@ var vvDataInput = function () {
     //Dividing each frequency by total length to get fraction
     for(j = 0; j < dict_len ; j++)
     {
-      iiListNode[j].iiFrequency = iiListNode[j].iiFrequency/len;
+      iiListNode[j].iiFrequency = (iiListNode[j].iiFrequency/len).toFixed(3);
     }
 
 

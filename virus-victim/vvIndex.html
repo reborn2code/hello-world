@@ -29,12 +29,15 @@
 
         <table ng-show="vvHeapArray">
           <tr>
-            <td> Heap Value </td>
+            <td> Heap Symbol </td>
+            <td> Frequency </td>
           </tr>
           <tr ng-repeat="x in vvHeapArray">
             <td>
-              Value is {{ x }}
+              {{ x.iiSymbol }}
             </td>
+            <td>
+              {{ x.iiFrequency }}
           </tr>
         </table>
 
