@@ -1,21 +1,24 @@
-input[type=text], select {
-    width: 100%;
-    padding: 50px 20px;
-    margin: 8px 0;
+.textArea {
+    width: 60%;
+    margin-left:20%;
+    margin-right:20%;
+    padding: 10px 10px;
     display: inline-block;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 10px;
     box-sizing: border-box;
+    text-align: justify;
 }
 
 input[type=submit] {
-    width: 100%;
+    width: 60%;
+    margin-left:20%;
+    margin-right:20%;
     background-color: #4CAF50;
     color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
+    padding: 20px 20px;
     border: none;
-    border-radius: 4px;
+    border-radius: 10px;
     cursor: pointer;
 }
 
@@ -23,15 +26,31 @@ input[type=submit]:hover {
     background-color: #45a049;
 }
 
+.button_panel, .contact_me
+{
+    display: table;
+    margin: 0 auto;
+}
+
+h1 {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    text-align:center;
+}
+
 div {
     border-radius: 5px;
     background-color: #f2f2f2;
     padding: 20px;
+    text-align:justify;
 }
 
 table {
     border-collapse: collapse;
-    width: 100%;
+    width: 60%;
+    margin-left:20%;
+    margin-right:20%;
 }
 
 th, td {
@@ -50,4 +69,9 @@ tr:hover {background-color: #f5f5f5}
 
 table, th, td {
     border: 1px solid black;
+}
+
+caption {
+    display: table-caption;
+    text-align: center;
 }

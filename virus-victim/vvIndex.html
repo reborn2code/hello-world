@@ -14,46 +14,64 @@
   <body>
       <div ng-controller="vvBuildHeap">
 
-          <input type="text" ng-model="vvInputString"> </input>
+        <h1> Demonstration of Virus - Victim Analogy </h1>
+        <div>
+          Huffman coding is one type of Variable Length Coding, the code length is decided based on the frequency of the symbol. It is ‘Prefix Code’, i.e. no codeword is prefix of any other codeword.
+It is used for lossless data compression. Prefix-codes are prone to syncronization slippage in real time. To avoid these errors, additional suffix-free condition is introduced.
+
+Reversible Variable Length Coding, RVLC is an example of suffix free code. This website demonstrates mechanism to convert any Huffman code into RVLC. This conversion is performed by 'Padding Insertion' on 'Virus' Nodes.
+Overall rank of an Huffman code is shown in the first table. Padding Insertion reduces the overall rank of the code. Once the overall rank is reduced to Zero, the code follows suffix-free condition, and is an RVLC code.
+
+Enter the text/data to be converted into RVLC below. Click 'Generate Huffman Tree' to generate Huffman Tree for the given code.
+Click 'Padding Insertion' button to perform padding insertion on all the codewords with non-zero ranks. After one round of padding insertion, check the change in the overall rank and increase in average codeword length.
+'Genearate Dictionary' and 'Generate Heap' are optional buttons that demonstrate intermediate steps of generating Huffman Tree.
+
+        </div>
+
+          <p>
+          <textarea class="textArea" rows="8" cols="80" ng-model="vvInputString"></textarea>
+          </p>
           <!--
+          <input type="text" ng-model="vvInputString"> </input>
           <input type="text" ng-model="vvInputNode"> </input>
           -->
+          <div class="button_panel">
           <button ng-click="vvGenerateDict()"> Generate Dictionary </button>
           <button ng-click="vvInput2Heap()"> Generate Heap </button>
           <button ng-click="vvGenerateHuffmanTree()"> Generate Huffman Tree </button>
           <button ng-click="vvPaddingInsertion()"> Padding Insertion </button>
+          </div>
 
-        <div>
-          Input : {{ vvInputString }}
-        </div>
+          <table ng-show="vvHuffmanTree">
+            <caption> Basic Information </caption>
+            <tr>
+              <td> Average Codeword Length:</td>
+              <td> {{ vvAvgCodeLength }}</td>
+            </tr>
+            <tr>
+              <td> Overall Rank: </td>
+              <td> {{ vvOverallRank }}</td>
+            </tr>
+          </table>
 
-        <p> Avg Code Length : {{ vvAvgCodeLength }}</p>
-        <p> Overall rank : {{ vvOverallRank }}</p>
-
-        <table ng-show="vvHuffmanTree" ng-hide="vvHeapArray" ng-hide="vvDictWithFreq">
+        <table ng-show="vvHuffmanTree">
+          <caption> Variable Length Code </caption>
           <tr>
             <td> Symbol </td>
             <td> frequency </td>
             <td> codeword </td>
-            <td> id </td>
-            <td> parent </td>
-            <td> left </td>
-            <td> right </td>
             <td> rank </td>
           </tr>
-          <tr ng-repeat="x in vvHuffmanTree">
+          <tr ng-repeat="x in vvHuffmanTree | filter:{ttLeft:-1} | filter:{ttRight:-1}">
             <td> {{ x.ttSymbol }}</td>
             <td> {{ x.iiFrequency }} </td>
             <td> {{ x.ttCodeword }} </td>
-            <td> {{ x.ttID }} </td>
-            <td> {{ x.ttParent }} </td>
-            <td> {{ x.ttLeft }} </td>
-            <td> {{ x.ttRight }} </td>
             <td> {{ x.ttRank }} </td>
           </tr>
         </table>
 
-        <table ng-show="vvHeapArray" ng-hide="vvHuffmanTree" ng-hide="vvDictWithFreq">
+        <table ng-show="vvHeapArray">
+          <caption> Heap  </caption>
           <tr>
             <td> Heap Symbol </td>
             <td> Frequency </td>
@@ -67,7 +85,8 @@
           </tr>
         </table>
 
-        <table ng-show="vvDictWithFreq" ng-hide="vvHuffmanTree" ng-hide="vvHeapArray">
+        <table ng-show="vvDictWithFreq">
+          <caption> Dictionary </caption>
           <tr>
             <td> Symbol </td>
             <td> Frequency </td>
@@ -87,6 +106,14 @@
           Index is: {{ x }}
         </p>
         -->
+        <div class="contact_me">
+        <script type="text/javascript"></script>
+        <div class="LI-profile-badge"  data-version="v1" data-size="small" data-locale="en_US" data-type="horizontal"
+          data-theme="dark" data-vanity="riteshnagpal"><a class="LI-simple-link" href='https://in.linkedin.com/in/riteshnagpal'>Contact Me</a></div>
+
+          <div class="GH-profile-badge"  data-version="v1" data-size="medium" data-locale="en_US" data-type="horizontal"
+            data-theme="dark" data-vanity="riteshnagpal"><a class="GH-simple-link" href='https://github.com/reborn2code/hello-world/tree/master/virus-victim'>Github Repository</a></div>
+        </div>
       </div>
   </body>
 </html>
