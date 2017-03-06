@@ -230,7 +230,7 @@ var vvTree = function(vvHeapOps) {
   var ttCheckForVirusVictim = function(ttTreeArray) {
     //This method checks for virus and victim on all the nodes.
     //These are caluldated only for children nodes.
-    var i, j, len;
+    var i, j, len, tmpVirus, tmpVictim, searchId;
     len = ttTreeArray.length;
     //reset all virus, victim nodes
     for (i = 0; i < len; i++) {
@@ -248,11 +248,16 @@ var vvTree = function(vvHeapOps) {
             // In case ttTreeArray[i] is Virus to ttTreeArray[j],
             //    : ttTreeArray[i]'s rank will increase by one
             //    : ttTreeArray[i]'s victim list will have id of ttTreeArray[j]
-            if(ttTreeArray[j].ttCodeword.search(ttTreeArray[i].ttCodeword) > 0 ) {
+            searchId = ttTreeArray[j].ttCodeword.search(ttTreeArray[i].ttCodeword);
+            if( searchId > 0 ) {
               // console.log("i: " + i + " code at i: " + ttTreeArray[i].ttCodeword);
               // console.log("j: " + j + " code at j: " + ttTreeArray[j].ttCodeword);
-              ttTreeArray[i].ttRank++;
-              ttTreeArray[i].ttVictims.push(j);
+              // March 6: Adding additional code to fix Bug related to counting intermediate matching as a victim
+              // This will be fixed by adding the searchId with the length of the virus node. This sum should be equal to the length of the virus
+              if( searchId + ttTreeArray[i].ttCodeword.length == ttTreeArray[j].ttCodeword.length) {
+                ttTreeArray[i].ttRank++;
+                ttTreeArray[i].ttVictims.push(j);
+              } //To ensure that string matching is not done for the intermediate node
             } //end of if to check virus - victim
           }
         } // End of internal for loop

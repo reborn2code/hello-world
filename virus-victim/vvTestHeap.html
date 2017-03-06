@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app="vvAnalogy">
+  <head>
+    <meta charset="utf-8">
+    <script src="angular.js"></script>
+    <script src="string.js"></script>
+    <script src="vvHeap.js"></script>
+    <title>RVLC</title>
+  </head>
+  <body>
+      <div ng-controller="vvBuildHeap">
+
+          <input type="text" ng-model="vvInputString"> </input>
+          <input type="text" ng-model="vvInputNode"> </input>
+          <button ng-click="vvInput2Heap()"> Generate Heap </button>
+
+        <div>
+          Input : {{ vvInputString }}
+        </div>
+
+        <p> Min Value of Heap : {{ vvHeapMin }}</p>
+        <p>Showing Input Array converted into Extracted Min Heap </p>
+        <!--
+        <p ng-repeat="x in vvHeapArray">
+          Index is: {{ x }}
+        </p>
+        -->
+      </div>
+  </body>
+</html>
