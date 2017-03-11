@@ -132,18 +132,20 @@ var vvTree = function(vvHeapOps) {
 
   var ttPerformPaddingWith = function(ttTreeArray, ttIndex, ttPad) {
     var codeword, tmpCodeword, newRank, currentRank;
-    var ttTreeArray = ttCheckForVirusVictim(ttTreeArray);
+    ttTreeArray = ttCheckForVirusVictim(ttTreeArray); //March 11: Removing var from the beginning. No need for a new varaible.
     currentRank = ttGetOverallRank(ttTreeArray);
 
-    codeword = ttTreeArray[ttIndex].ttCodeword.concat(ttPad);
+    //March 11 : swapping the order of operation. Creating tmpCodeword before concat() operation.
+    //           as per concat() shouldn't modify the original string, but it is a good practice to keep this operation first.
     tmpCodeword = ttTreeArray[ttIndex].ttCodeword;
+    codeword = ttTreeArray[ttIndex].ttCodeword.concat(ttPad);
     ttTreeArray[ttIndex].ttCodeword = codeword;
-    console.log("codeword: " + codeword);
+    //console.log("codeword: " + codeword);
     if(ttIsItValidPrefixCode(ttTreeArray, codeword, ttIndex)) {
-      console.log("codeword: " + codeword + " Tree Code: " + tmpCodeword);
+      //console.log("codeword: " + codeword + " Tree Code: " + tmpCodeword);
       ttTreeArray = ttCheckForVirusVictim(ttTreeArray);
       newRank = ttGetOverallRank(ttTreeArray);
-      console.log("newRank: " + newRank + " currentRank: " + currentRank);
+      //console.log("newRank: " + newRank + " currentRank: " + currentRank);
     }
 
     if(newRank > currentRank) {
@@ -167,15 +169,15 @@ var vvTree = function(vvHeapOps) {
 
     //Pading insertion is performed only on a leaf node
     if(ttIsItLeafNode(ttTreeArray, ttIndex) == false) {
-      console.warn("Not a Valid Leaf");
-      console.log(ttTreeArray[ttIndex].ttSymbol);
+      //console.warn("Not a Valid Leaf");
+      //console.log(ttTreeArray[ttIndex].ttSymbol);
       return ttTreeArray;
     }
 
     // Check for current Rank. If current rank is 0 or the given node's rank is zero than no need of padding insertion.
     if(currentRank == 0 || ttTreeArray[ttIndex].ttRank == 0) {
-      console.log("No Need to perform Padding insertion");
-      console.log(ttTreeArray[ttIndex].ttSymbol);
+      //console.log("No Need to perform Padding insertion");
+      //console.log(ttTreeArray[ttIndex].ttSymbol);
       return ttTreeArray;
     }
 
@@ -216,11 +218,11 @@ var vvTree = function(vvHeapOps) {
         continue;
       }
       if(ttTreeArray[i].ttCodeword.search(codeword) == 0 ) {
-        console.log("codeword is prefix of given codeword" + codeword + " " + ttTreeArray[i].ttCodeword);
+        //console.warn("codeword is prefix of given codeword" + codeword + " " + ttTreeArray[i].ttCodeword);
         return false;
       }
       if(codeword.search(ttTreeArray[i].ttCodeword) == 0 ) {
-        console.log("given codeword is prefix of codeword" + codeword + " " + ttTreeArray[i].ttCodeword);
+        //console.warn("given codeword is prefix of codeword" + codeword + " " + ttTreeArray[i].ttCodeword);
         return false;
       }
     }
@@ -248,16 +250,19 @@ var vvTree = function(vvHeapOps) {
             // In case ttTreeArray[i] is Virus to ttTreeArray[j],
             //    : ttTreeArray[i]'s rank will increase by one
             //    : ttTreeArray[i]'s victim list will have id of ttTreeArray[j]
-            searchId = ttTreeArray[j].ttCodeword.search(ttTreeArray[i].ttCodeword);
-            if( searchId > 0 ) {
+            // March 11, 2017: search method created two bugs since it returns the location of the first match.
+            // Changing the method from search() to endsWith()
+            searchId = ttTreeArray[j].ttCodeword.endsWith(ttTreeArray[i].ttCodeword);
+            //endsWith() returns 'True' if ttTreeArray[i].ttCodeword is virus of ttTreeArray[j].ttCodeword,
+            //                      i.e. ttTreeArray[j].ttCodeword ends with ttTreeArray[j].ttCodeword
+            if( searchId && (ttTreeArray[j].ttCodeword != ttTreeArray[i].ttCodeword) ) {
               // console.log("i: " + i + " code at i: " + ttTreeArray[i].ttCodeword);
               // console.log("j: " + j + " code at j: " + ttTreeArray[j].ttCodeword);
               // March 6: Adding additional code to fix Bug related to counting intermediate matching as a victim
               // This will be fixed by adding the searchId with the length of the virus node. This sum should be equal to the length of the virus
-              if( searchId + ttTreeArray[i].ttCodeword.length == ttTreeArray[j].ttCodeword.length) {
+              // March 11, 2017: Removing the additional logic for search() method
                 ttTreeArray[i].ttRank++;
                 ttTreeArray[i].ttVictims.push(j);
-              } //To ensure that string matching is not done for the intermediate node
             } //end of if to check virus - victim
           }
         } // End of internal for loop

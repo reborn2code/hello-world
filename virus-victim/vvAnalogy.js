@@ -41,7 +41,7 @@ angular.module('vvAnalogy', [])
     var i;
     for (i = 0; i < huffmanTree.length ; i++) {
       huffmanTree = vvTree.ttPadingInsertion(huffmanTree, i);
-      console.log("Avg Codelen: " + vvTree.ttGetAvgCodeLength(huffmanTree));
+      //console.log("Avg Codelen: " + vvTree.ttGetAvgCodeLength(huffmanTree));
       $scope.vvAvgCodeLength = vvTree.ttGetAvgCodeLength(huffmanTree);
       $scope.vvOverallRank = vvTree.ttGetOverallRank(huffmanTree);
     }
