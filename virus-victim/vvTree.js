@@ -93,7 +93,7 @@ var vvTree = function(vvHeapOps) {
             avgCodeLen += (ttTreeArray[i].iiFrequency * ttTreeArray[i].ttCodeword.length);
       }
     }
-    return avgCodeLen;
+    return avgCodeLen.toFixed(3); //March 14, 2017 Adding .toFixed(3) to keep the average codeword length fixed to 3 digits after decimal
   };
 
   var ttAssignCode = function(ttTreeArray) {
@@ -115,6 +115,7 @@ var vvTree = function(vvHeapOps) {
         //console.log("Found Child Node at ID: " + ttIndex + " codeword: " + ttTreeArray[ttIndex].ttCodeword);
       ttInorderAppend(ttTreeArray, ttTreeArray[ttIndex].ttRight, "1", ttTreeArray[ttIndex].ttCodeword);
     }
+
     return ttTreeArray
   }; //end of ttInorderAppend()
 

@@ -1,0 +1,17 @@
+<p>
+Huffman coding is one type of Variable Length Coding, the code length is decided based on the frequency of the symbol. It is ‘Prefix Code’, i.e. no codeword is prefix of any other codeword.
+It is used for lossless data compression. Prefix-codes are prone to syncronization slippage in real time. To avoid these errors, additional suffix-free condition is introduced.
+</p>
+<p>
+  Reversible Variable Length Coding, RVLC is an example of suffix free code. This website demonstrates mechanism to convert any Huffman code into RVLC. This conversion is performed by 'Padding Insertion' on 'Virus' Nodes.
+  Overall rank of an Huffman code is shown in the first table. Padding Insertion reduces the overall rank of the code. Once the overall rank is reduced to Zero, the code follows suffix-free condition, and is an RVLC code.
+</p>
+<p>
+Enter the text/data to be converted into RVLC below. Click 'Generate Huffman Tree' to generate Huffman Tree for the given code.
+</p>
+<p>
+Click 'Padding Insertion' button to perform padding insertion on all the codewords with non-zero ranks. After one round of padding insertion, check the change in the overall rank and increase in average codeword length.
+</p>
+<p>
+'Genearate Dictionary' and 'Generate Heap' are optional buttons that demonstrate intermediate steps of generating Huffman Tree.
+</p>

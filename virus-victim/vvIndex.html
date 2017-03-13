@@ -15,25 +15,7 @@
       <div ng-controller="vvBuildHeap">
 
         <h1> Demonstration of Virus - Victim Analogy </h1>
-        <div>
-          <p>
-          Huffman coding is one type of Variable Length Coding, the code length is decided based on the frequency of the symbol. It is ‘Prefix Code’, i.e. no codeword is prefix of any other codeword.
-          It is used for lossless data compression. Prefix-codes are prone to syncronization slippage in real time. To avoid these errors, additional suffix-free condition is introduced.
-          </p>
-          <p>
-            Reversible Variable Length Coding, RVLC is an example of suffix free code. This website demonstrates mechanism to convert any Huffman code into RVLC. This conversion is performed by 'Padding Insertion' on 'Virus' Nodes.
-            Overall rank of an Huffman code is shown in the first table. Padding Insertion reduces the overall rank of the code. Once the overall rank is reduced to Zero, the code follows suffix-free condition, and is an RVLC code.
-          </p>
-          <p>
-          Enter the text/data to be converted into RVLC below. Click 'Generate Huffman Tree' to generate Huffman Tree for the given code.
-          </p>
-          <p>
-Click 'Padding Insertion' button to perform padding insertion on all the codewords with non-zero ranks. After one round of padding insertion, check the change in the overall rank and increase in average codeword length.
-          </p>
-          <p>
-'Genearate Dictionary' and 'Generate Heap' are optional buttons that demonstrate intermediate steps of generating Huffman Tree.
-          </p>
-        </div>
+        <div ng-include="'vvIntroduction.html'"> </div>
 
           <p>
           <textarea class="textArea" rows="8" cols="80" ng-model="vvInputString"></textarea>
@@ -62,11 +44,11 @@ Click 'Padding Insertion' button to perform padding insertion on all the codewor
           <caption> Variable Length Code </caption>
           <tr>
             <td> Symbol </td>
-            <td> frequency </td>
-            <td> codeword </td>
-            <td> rank </td>
+            <td> Frequency </td>
+            <td> Codeword </td>
+            <td> Rank </td>
           </tr>
-          <tr ng-repeat="x in vvHuffmanTree | filter:{ttLeft:-1} | filter:{ttRight:-1}">
+          <tr ng-repeat="x in vvHuffmanTree | orderBy:'-iiFrequency' | filter:{ttLeft:-1} | filter:{ttRight:-1}">
             <td> {{ x.ttSymbol }}</td>
             <td> {{ x.iiFrequency }} </td>
             <td> {{ x.ttCodeword }} </td>
@@ -105,15 +87,7 @@ Click 'Padding Insertion' button to perform padding insertion on all the codewor
           </tr>
         </table>
 
-        <div class="contact_me">
-            <iframe src="https://docs.google.com/presentation/d/1jiwwvvxCRwdvQ2iFtaxfgZdf_rqyoOyExXHdb68ox7s/embed?start=false&loop=false&delayms=5000"
-                frameborder="0" width="480" height="235" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" ></iframe>
-                <script type="text/javascript"></script>
-
-                <div class="LI-profile-badge"  data-version="v1" data-size="small" data-locale="en_US" data-type="horizontal"
-                  data-theme="dark" data-vanity="riteshnagpal"><a class="LI-simple-link" href='https://in.linkedin.com/in/riteshnagpal'>Contact Me</a></div>
-        </div>
-
+        <div class="contact_me" ng-include="'vvContactMe.html'"> </div>
       </div>
   </body>
 </html>
